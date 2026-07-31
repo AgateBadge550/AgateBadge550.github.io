@@ -56,21 +56,11 @@ font-size: 16px;
 display:block;
 margin-bottom:20px;
 }
-/* 实时天气独立方框 */
-.now-box{
-border:1px solid #ffb380;
-width:360px;
-padding:12px;
-margin:5px 0;
-white-space: pre-line;
-}
-/* 明日预报独立方框 */
-.tom-box{
-border:1px solid #ffb380;
-width:360px;
-padding:12px;
-margin-top:10px;
-white-space: pre-line;
+.weather-frame{
+background:#ffe6cc;
+border:none;
+width:350px;
+height:90px;
 }
 </style>
 </head>
@@ -80,52 +70,7 @@ white-space: pre-line;
 <span class="welcome-text">欢迎回来</span>
 --------------------------
 大同实时天气：
-<div class="now-box" id="nowWeather">正在加载实时天气数据...</div>
-
-大同明日预报：
-<div class="tom-box" id="tomWeather">正在加载明日预报数据...</div>
+<iframe class="weather-frame" src="https://wttr.in/Datong?format=%C %t 湿度:%h 风力:%w&lang=zh" scrolling="no"></iframe>
 </div>
-
-<script>
-// 全局回调函数，JSONP专用，绕过浏览器跨域限制
-function getWeatherData(res) {
-    // 接口基础实况数据
-    const base = res.weatherinfo;
-    // 实时天气文本
-    const nowText = `天气状况：${base.weather}
-当前温度：${base.temp} ℃
-空气湿度：${base.humidity} %
-风向风力：${base.wind} ${base.wind_level}`;
-    document.getElementById("nowWeather").innerText = nowText;
-
-    // 明日天气预报文本
-    const tomorrowText = `明日天气：${base.weather1}
-温度区间：${base.temp1}
-风向风力：${base.wind1} ${base.wind_level1}`;
-    document.getElementById("tomWeather").innerText = tomorrowText;
-}
-
-// 创建JSONP请求脚本，国内稳定气象接口，永不404
-function loadWeather() {
-    // 清除旧脚本，防止重复请求
-    const oldScript = document.getElementById("weatherApiScript");
-    if (oldScript) oldScript.remove();
-
-    const script = document.createElement("script");
-    script.id = "weatherApiScript";
-    // 稳定国内气象JSONP接口，自带大同今日+明日数据
-    script.src = "https://wthrcdn.etouch.cn/WeatherApi?city=大同&callback=getWeatherData";
-    document.body.appendChild(script);
-}
-
-// 全局捕获加载失败异常，给出友好提示
-window.onerror = function() {
-    document.getElementById("nowWeather").innerText = "加载失败：网络限制，请切换手机流量后刷新页面";
-    document.getElementById("tomWeather").innerText = "加载失败：网络限制，请切换手机流量后刷新页面";
-}
-
-// 页面载入自动请求天气
-window.onload = loadWeather;
-</script>
 </body>
 </html>
