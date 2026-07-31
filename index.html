@@ -56,19 +56,18 @@ font-size: 16px;
 display:block;
 margin-bottom:20px;
 }
-/* 实时天气独立框 */
+/* 实时天气独立区块 */
 .now-box{
-background:#ffe6cc;
 border:1px solid #ffb380;
 width:360px;
-height:95px;
+padding:12px;
+margin:5px 0;
 }
-/* 明日预报独立框 */
+/* 明日预报独立区块 */
 .tom-box{
-background:#ffe6cc;
 border:1px solid #ffb380;
 width:360px;
-height:75px;
+padding:12px;
 margin-top:10px;
 }
 </style>
@@ -79,10 +78,38 @@ margin-top:10px;
 <span class="welcome-text">欢迎回来</span>
 --------------------------
 大同实时天气：
-<iframe class="now-box" src="https://api.imqd.cn/jdwx/weather.php?city=大同" scrolling="no"></iframe>
+<div class="now-box" id="nowWeather">加载中实时天气...</div>
 
 大同明日预报：
-<iframe class="tom-box" src="https://api.imqd.cn/jdwx/weather.php?city=大同&day=1" scrolling="no"></iframe>
+<div class="tom-box" id="tomWeather">加载中明日预报...</div>
 </div>
+
+<script>
+// JSONP跨域请求，不会404，自带今日+明天天气
+function weatherCallback(res) {
+    let info = res.weatherinfo;
+    // 实时天气文字
+    let nowStr = `天气：${info.weather}
+温度：${info.temp}℃
+湿度：${info.humidity}
+风力：${info.wind}${info.wind_level}`;
+    document.getElementById("nowWeather").innerText = nowStr;
+
+    // 明日预报文字
+    let tomorrowStr = `明日天气：${info.weather1}
+气温区间：${info.temp1}
+风向风力：${info.wind1}${info.wind_level1}`;
+    document.getElementById("tomWeather").innerText = tomorrowStr;
+}
+// 动态创建script绕过跨域，无iframe，杜绝404页面
+let script = document.createElement('script');
+script.src = 'https://wthrcdn.etouch.cn/WeatherApi?city=大同&callback=weatherCallback';
+document.body.appendChild(script);
+// 加载失败兜底提示
+window.onerror = function(){
+    document.getElementById("nowWeather").innerText = "天气加载失败，请切换流量刷新";
+    document.getElementById("tomWeather").innerText = "预报加载失败，请切换流量刷新";
+}
+</script>
 </body>
 </html>
