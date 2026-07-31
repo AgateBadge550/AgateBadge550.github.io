@@ -1,77 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wttr.in — Weather Report</title>
-<link rel="stylesheet" type="text/css"
-href="https://adobe-fonts.github.io/source-code-pro/source-code-pro.css">
+<title>Rain主页</title>
 <style>
-html, body {
-margin: 0;
-padding: 0;
-background: #e6f4ff;
-height: 100%;
-overflow: auto;
-display: flex;
-justify-content: center;
-padding-top: 80px;
-}
-.term-container {
-background: #e6f4ff;
-color: #333333;
-font-family: "Source Code Pro",
-"DejaVu Sans Mono",
-Menlo,
-"Lucida Sans Typewriter",
-"Lucida Console",
-monaco,
-"Bitstream Vera Sans Mono",
-monospace;
-font-size: 11.8px;
-line-height: 1.30 !important;
-letter-spacing: 0.00em;
-padding: 6px 10px 0px 10px;
-white-space: pre;
-word-break: normal;
-overflow-wrap: normal;
-margin: 0;
-max-width: 100%;
-width: fit-content;
-display: block;
-box-sizing: border-box;
-}
-.term-fg1, .bold {
-color: #111111;
-}
-/* 绿色标题文字 */
-.green-text {
-color: #009929;
-font-size: 18px;
-display:block;
-margin-bottom:8px;
-}
-.welcome-text {
-color: #222222;
-font-size: 16px;
-display:block;
-margin-bottom:20px;
-}
-.weather-frame{
+body{
 background:#e6f4ff;
-border:none;
-width:350px;
-height:90px;
+text-align:center;
+margin-top:60px;
+}
+.green-text{
+color:green;
+font-size:28px;
+}
+.wel{
+font-size:20px;
+}
+.weather-info{
+margin-top:20px;
+font-size:18px;
+color:#333;
+background:#fff;
+width:300px;
+padding:15px;
+border-radius:12px;
+box-shadow:0 2px 8px #ccc;
+margin-left:auto;
+margin-right:auto;
 }
 </style>
 </head>
 <body>
-<div class="term-container">
-<span class="green-text">hello I am Rain</span>
-<span class="welcome-text">欢迎回来，这里是心灵港湾，我一直都在</span>
---------------------------
-大同实时天气：
-<iframe class="weather-frame" src="https://wttr.in/Datong?format=%C %t 湿度:%h 风力:%w&lang=zh" scrolling="no"></iframe>
+<p class="green-text">hello I am Rain</p>
+<p class="wel">欢迎回来</p>
+
+<!-- 纯文字大同天气区域 -->
+<div class="weather-info" id="weather">
+正在加载大同天气...
 </div>
+
+<script>
+// 大同城市ID 101100201
+fetch('https://wttr.in/Datong?format=大同天气：%C %t 湿度：%h 风速：%w')
+.then(res=>res.text())
+.then(data=>{
+document.getElementById('weather').innerText = data;
+})
+.catch(()=>{
+document.getElementById('weather').innerText = "天气加载失败，请稍后刷新";
+})
+</script>
 </body>
 </html>
