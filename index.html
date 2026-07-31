@@ -10,24 +10,20 @@ background:#e6f4ff;
 text-align:center;
 margin-top:60px;
 }
+/* 第一行绿色文字 */
 .green-text{
 color:green;
 font-size:28px;
 }
+/* 第二行欢迎文字 */
 .wel{
 font-size:20px;
 }
-.weather-info{
+/* 天气文字，无任何边框/白色小框 */
+.weather-text{
 margin-top:20px;
 font-size:18px;
-color:#333;
-background:#fff;
-width:300px;
-padding:15px;
-border-radius:12px;
-box-shadow:0 2px 8px #ccc;
-margin-left:auto;
-margin-right:auto;
+color:#222;
 }
 </style>
 </head>
@@ -35,20 +31,20 @@ margin-right:auto;
 <p class="green-text">hello I am Rain</p>
 <p class="wel">欢迎回来</p>
 
-<!-- 纯文字大同天气区域 -->
-<div class="weather-info" id="weather">
+<!-- 纯文字大同天气，无盒子、无白框 -->
+<div class="weather-text" id="weather">
 正在加载大同天气...
 </div>
 
 <script>
-// 大同城市ID 101100201
-fetch('https://wttr.in/Datong?format=大同天气：%C %t 湿度：%h 风速：%w')
+// 调用免费文字天气接口，仅输出文字
+fetch('https://wttr.in/Datong?format=大同实时天气：%C 温度：%t 湿度：%h 风力：%w')
 .then(res=>res.text())
 .then(data=>{
 document.getElementById('weather').innerText = data;
 })
 .catch(()=>{
-document.getElementById('weather').innerText = "天气加载失败，请稍后刷新";
+document.getElementById('weather').innerText = "天气加载失败，刷新页面重试";
 })
 </script>
 </body>
