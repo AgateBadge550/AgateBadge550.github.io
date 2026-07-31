@@ -62,7 +62,6 @@ border:none;
 width:350px;
 height:90px;
 }
-/* 仅新增明日窗口样式，其余样式完全保留 */
 .tomorrow-weather-frame{
 background:#ffe6cc;
 border:none;
@@ -83,11 +82,10 @@ line-height:1.6;
 <span class="welcome-text">欢迎回来</span>
 --------------------------
 大同实时天气：
-<iframe class="weather-frame" src="https://wttr.in/Datong?u&lang=zh&format=%C %t 湿度:%h 风力:%w" scrolling="no"></iframe>
+<iframe class="weather-frame" src="https://wttr.in/Datong?m&lang=zh&format=%C %t 湿度:%h 风力:%w" scrolling="no"></iframe>
 
 大同明日预报：
-<!-- 新增窗口，同样u参数强制摄氏，不改动上方原有接口 -->
-<iframe class="tomorrow-weather-frame" src="https://wttr.in/Datong?u&lang=zh&format=明日：%C 气温区间：%l~%m℃" scrolling="no"></iframe>
+<iframe class="tomorrow-weather-frame" src="https://wttr.in/Datong/1?m&lang=zh&format=明日：%C 气温：%t" scrolling="no"></iframe>
 
 <div class="mulan-text">
 《木兰辞》
